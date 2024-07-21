@@ -27,6 +27,8 @@ class PDF(FPDF):
     pass
 
 pdf = PDF()
-txt="00 - Python exercises/09 - Generating PDF/paragraph.txt"
-pdf.print_chapter(txt)
-pdf.output("sample4.pdf")
+txt=open("C:/Users/54112/Desktop/python/pythonProject/00 - Python exercises/09 - Generating PDF/para.txt","r")
+
+pdf.print_chapter("C:/Users/54112/Desktop/python/pythonProject/00 - Python exercises/09 - Generating PDF/para.txt")
+#pdf.output("sample4.pdf")
+print(txt.read())
