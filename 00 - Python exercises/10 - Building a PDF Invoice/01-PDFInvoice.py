@@ -1,5 +1,6 @@
 from tkinter import *
 from fpdf import FPDF
+import os
 
 
 window =Tk()
@@ -59,7 +60,9 @@ def generate_invoice():
 
   pdf.cell(0,10, text="Total Amount: "+str(calculate_total()), new_x="LMARGIN",new_y="NEXT",align="L")
 
+
   pdf.output("00 - Python exercises/10 - Building a PDF Invoice/invoice.pdf")
+  os.popen("00 - Python exercises/10 - Building a PDF Invoice/invoice.pdf")
 
 
 medicine_label = Label(window, text="Medicine: ")
