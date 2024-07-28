@@ -1,11 +1,24 @@
 from tkinter import *
+from fpdf import FPDF
+import pyqrcode
+from tkinter import messagebox
 
+
+class PDFCV(FPDF):
+  def header(self) :
+    self.image("00 - Python exercises/11 - Auromated CV Generator/mywebsite.png",10,8,33,title="Porfolio Site")
+
+  def footee(self):
+    pass
+
+  def generate_cv(self, name, email,phone,address,skills,education,work_experience, about_me):
+    pass
 def generate_cv_pdf():
   name= entry_name.get()
   email= entry_email.get()
   phone= entry_phone.get()
   address= entry_address.get()
-  wwbsite= entry_website.get()
+  website= entry_website.get()
   skills= entry_skills.get("1.0",END).strip().split('\n')
   work_experience= []
   education =[]
@@ -15,14 +28,23 @@ def generate_cv_pdf():
     title,description = line.split(":")
     work_experience.append({'title':title.strip(), 'descriprion':description.strip()})
 
+  about_me= entry_about_me.get("1.0",END)
+
   education_lines = entry_education.get("1.0",END).strip().split('\n')
   for line in education_lines:
     degree, university= line.split(":")
     education.append({'education':degree.split(),'university': university.split()})
+  # Create QR code
+  qrcode = pyqrcode.create(website)
+  qrcode.png("00 - Python exercises/11 - Auromated CV Generator/mywebsite.png", scale=6)
+
+  if not name or not email or not phone or not address or not skills or not education or not work_experience:
+    messagebox.showerror("Error", "Please fill in all the details")
+    return
+  cv= PDFCV()
+  cv.generate_cv(name, email,phone,address,skills,education,work_experience, about_me)
 
 
-  print(work_experience)
-  print(education)
 window= Tk()
 window.title("CV Generator")
 
