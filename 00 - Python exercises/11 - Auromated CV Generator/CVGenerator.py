@@ -12,7 +12,67 @@ class PDFCV(FPDF):
     pass
 
   def generate_cv(self, name, email,phone,address,skills,education,work_experience, about_me):
-    pass
+    self.add_page()
+    self.ln(20)
+
+    #Display the name
+    self.set_font("Arial","B",26)
+    self.cell(0,10,name,new_x="LMARGIN",new_y="NEXT",align="C")
+
+    #Adding contact information header
+    self.set_font("Arial","B",12)
+    self.cell(0,10,"Contact Information",new_x="LMARGIN",new_y="NEXT",align="L")
+
+    self.set_font("Arial","",10)
+    self.cell(0,5,"Email: {}".format(email),new_x="LMARGIN",new_y="NEXT")
+    self.cell(0,5,"Phone: {}".format(phone),new_x="LMARGIN",new_y="NEXT")
+    self.cell(0,5,"Address: {}".format(address),new_x="LMARGIN",new_y="NEXT")
+
+    #Skills
+    self.ln(10)
+    self.set_font("Arial","B",12)
+    self.cell(0,10,"Skills",new_x="LMARGIN",new_y="NEXT",align="L")
+
+    #Adding skills
+    self.set_font("Arial","",10)
+    for skill in skills:
+      self.cell(0,5,"- {}".format(skill), new_x="LMARGIN", new_y="NEXT")
+
+    #Education
+    self.ln(10)
+    self.set_font("Arial","B",12)
+    self.cell(0,10,"Education",new_x="LMARGIN",new_y="NEXT",align="L")
+
+    #Adding education
+    self.set_font("Arial","",10)
+    for education_item in education:
+      self.cell(0,5,"{}: {}".format(education_item["degree"], education_item["university"]), new_x="LMARGIN", new_y="NEXT")
+
+    #Work experience
+    self.ln(10)
+    self.set_font("Arial","B",12)
+    self.cell(0,10,"Work experience",new_x="LMARGIN",new_y="NEXT",align="L")
+
+    #Adding experience
+    self.set_font("Arial","",10)
+    for experience in work_experience:
+      self.cell(0,5,"{}: {}".format(experience["title"], experience["description"]), new_x="LMARGIN", new_y="NEXT")
+
+    #About me header
+    self.ln(10)
+    self.set_font("Arial","B",12)
+    self.cell(0,10,"About me",new_x="LMARGIN",new_y="NEXT",align="L")
+
+    #About me
+    self.set_font("Arial","",10)
+    self.multi_cell(0,5,"{}".format(about_me), new_x="LMARGIN", new_y="NEXT")
+
+
+
+    self.output("00 - Python exercises/11 - Auromated CV Generator/cv1.pdf")
+
+
+
 def generate_cv_pdf():
   name= entry_name.get()
   email= entry_email.get()
@@ -23,17 +83,19 @@ def generate_cv_pdf():
   work_experience= []
   education =[]
 
+  education_lines = entry_education.get("1.0",END).strip().split('\n')
+  for line in education_lines:
+    degree,university= line.split(":")
+    education.append({'degree':degree.strip(),'university': university.strip()})
+
   work_experience_lines= entry_experience.get("1.0",END).strip().split('\n')
   for line in work_experience_lines:
     title,description = line.split(":")
-    work_experience.append({'title':title.strip(), 'descriprion':description.strip()})
+    work_experience.append({'title':title.strip(), 'description':description.strip()})
+
+
 
   about_me= entry_about_me.get("1.0",END)
-
-  education_lines = entry_education.get("1.0",END).strip().split('\n')
-  for line in education_lines:
-    degree, university= line.split(":")
-    education.append({'education':degree.split(),'university': university.split()})
   # Create QR code
   qrcode = pyqrcode.create(website)
   qrcode.png("00 - Python exercises/11 - Auromated CV Generator/mywebsite.png", scale=6)
