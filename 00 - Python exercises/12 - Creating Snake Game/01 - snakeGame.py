@@ -15,12 +15,15 @@ black=(0,0,0)
 red=(255,0,0)
 
 game_over = False
+score=0
 
 x1=window_witdh / 2
 y1= window_height / 2
 
 x1_change= 0
 y1_change= 0
+
+length_of_snake=1
 
 foodx= round(random.randrange(0, window_witdh-10)/10)*10.0
 foody= round(random.randrange(0, window_height-10)/10)*10.0
@@ -60,7 +63,13 @@ while not game_over:
 
   window.fill(black)
 
-  pygame.draw.rect(window, red, [400,300,10,10])
+  if x1==foodx and y1== foody:
+    foodx= round(random.randrange(0, window_witdh-10)/10)*10.0
+    foody= round(random.randrange(0, window_height-10)/10)*10.0
+    score+=1
+    length_of_snake+=1
+
+  pygame.draw.rect(window, red, [foodx,foody,10,10])
   pygame.draw.rect(window, white,[x1,y1,10,10])
   pygame.display.update()
   clock.tick(20)
