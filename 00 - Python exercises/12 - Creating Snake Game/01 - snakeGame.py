@@ -23,6 +23,8 @@ y1= window_height / 2
 x1_change= 0
 y1_change= 0
 
+
+snake_body= []
 length_of_snake=1
 
 foodx= round(random.randrange(0, window_witdh-10)/10)*10.0
@@ -56,6 +58,12 @@ while not game_over:
   x1= x1 + x1_change
   y1= y1 + y1_change
 
+  snake_head=[]
+  snake_head.append(x1)
+  snake_head.append(y1)
+
+  snake_body.append(snake_head)
+
   if x1 >= window_witdh or x1<0 or y1>=window_height or y1<0:
     x1=window_witdh / 2
     y1= window_height / 2
@@ -70,7 +78,10 @@ while not game_over:
     length_of_snake+=1
 
   pygame.draw.rect(window, red, [foodx,foody,10,10])
-  pygame.draw.rect(window, white,[x1,y1,10,10])
+  #pygame.draw.rect(window, white,[x1,y1,10,10])
+  for segment in snake_body:
+    pygame.draw.rect(window, white,[x1,y1,10,10])
+
   pygame.display.update()
   clock.tick(20)
 
