@@ -64,6 +64,18 @@ while not game_over:
 
   snake_body.append(snake_head)
 
+  if len(snake_body)> length_of_snake:
+    del snake_body[0]
+
+  for segment in snake_body[:-1]:
+    if segment == snake_head:
+      game_over= True
+
+  font_style= pygame.font.SysFont(None, 50)
+  score_text = font_style.render("Score: "+str(score),True, white)
+  window.blit(score_text, (10, 10))
+  print(score)
+
   if x1 >= window_witdh or x1<0 or y1>=window_height or y1<0:
     x1=window_witdh / 2
     y1= window_height / 2
@@ -80,7 +92,7 @@ while not game_over:
   pygame.draw.rect(window, red, [foodx,foody,10,10])
   #pygame.draw.rect(window, white,[x1,y1,10,10])
   for segment in snake_body:
-    pygame.draw.rect(window, white,[x1,y1,10,10])
+    pygame.draw.rect(window, white,[segment[0],segment[1],10,10])
 
   pygame.display.update()
   clock.tick(20)
