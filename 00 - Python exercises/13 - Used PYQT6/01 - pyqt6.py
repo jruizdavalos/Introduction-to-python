@@ -35,7 +35,7 @@ class Window(QWidget):
     features_label.setFont(QFont("Arial",16))
     features_label.move(20,240)
 
-    #Model
+    #Model of the car
     model_label= QLabel(self)
     model_label.setText("Models: 2.2 Petrol, 1.8 Diesel")
     model_label.setFont(QFont("Arial",16))
@@ -54,3 +54,4 @@ Window = Window()
 Window.show()
 
 sys.exit(app.exec())
+
