@@ -26,6 +26,8 @@ class Window(QMainWindow):
     self.result_label= QLabel("Result : ",self)
     self.result_label.move(20,100)
 
+    
+
     calculat_button.clicked.connect(self.calculate_square_root)
 
   def calculate_square_root(self):
@@ -37,7 +39,7 @@ class Window(QMainWindow):
       else:
         msg= QMessageBox.warning(self,"Not a perfect square", "The number is not perfect square")
     except ValueError:
-      QMessageBox.warning(self,"Invalid input", "Please enter a valid")
+      QMessageBox.warning(self,"Invalid input", "Please enter a valid number")
 
 app = QApplication(sys.argv)
 Window = Window()
