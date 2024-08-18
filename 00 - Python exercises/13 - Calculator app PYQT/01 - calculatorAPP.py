@@ -14,6 +14,8 @@ class Window(QWidget):
     self.setWindowTitle("Calculator")
     
     self.current_input="0"
+    self.previous_input=""
+    self.current_operator=""
 
     layout = QGridLayout()
     self.setLayout(layout)
@@ -27,6 +29,9 @@ class Window(QWidget):
 
     operators = ["+","-","*","/"]
     operator_buttons = [QPushButton(op) for op in operators]
+    for button in operator_buttons:
+      button.clicked.connect(self.operator_button_clicked)
+    
     equals_button= QPushButton("=")
     clear_button= QPushButton("C")
 
@@ -60,6 +65,18 @@ class Window(QWidget):
       self.current_input+=digit
     self.display.setText(self.current_input)
     
+  def operator_button_clicked(self):
+    operator =self.sender().text()
+    if self.current_operator =="":
+      self.current_operator = operator
+      self.previous_input= self.current_input  
+      self.current_input="0"
+    else:
+
+      self.current_operator = operator
+      self.previous_input= self.current_input  
+      self.current_input="0"
+
 
 
 app = QApplication(sys.argv)
