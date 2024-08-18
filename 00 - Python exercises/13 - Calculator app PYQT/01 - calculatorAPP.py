@@ -32,8 +32,10 @@ class Window(QWidget):
     for button in operator_buttons:
       button.clicked.connect(self.operator_button_clicked)
     
-    equals_button= QPushButton("=")
-    clear_button= QPushButton("C")
+    self.equals_button= QPushButton("=")
+    self.equals_button.clicked.connect(self.calculate)
+    self.clear_button= QPushButton("C")
+    self.clear_button.clicked.connect(self.clear)
 
     for i,button in enumerate(buttons):
       if (i==0):
@@ -51,8 +53,8 @@ class Window(QWidget):
     for i, op_button in enumerate(operator_buttons):
       layout.addWidget(op_button,i+1,3)
 
-    layout.addWidget(equals_button,4,2)
-    layout.addWidget(clear_button,4,0)
+    layout.addWidget(self.equals_button,4,2)
+    layout.addWidget(self.clear_button,4,0)
 
 
   # Creating a method to handle number buttons clicked
@@ -72,11 +74,38 @@ class Window(QWidget):
       self.previous_input= self.current_input  
       self.current_input="0"
     else:
-
+      # Calculate the result
+      self.calculate()
       self.current_operator = operator
       self.previous_input= self.current_input  
       self.current_input="0"
 
+  def calculate(self):
+    if self.current_operator =="+":
+      result= str(float(self.previous_input) + float(self.current_input))
+    elif self.current_operator=="-":
+      result= str(float(self.previous_input) - float(self.current_input))
+    elif self.current_operator=="*":
+      result= str(float(self.previous_input) * float(self.current_input))
+    elif self.current_operator=="/":
+      
+      if self.current_input=="0":
+        result="Error"
+      else:
+        result= str(float(self.previous_input) / float(self.current_input))
+    else:
+      result= self.current_input
+    
+    self.display.setText(result)
+    self.current_input= result
+    self.current_operator=""
+
+  def clear(self):
+    self.current_input="0"
+    self.previous_input=""
+    self.current_operator=""
+    self.display.setText(self.current_input)
+    
 
 
 app = QApplication(sys.argv)
